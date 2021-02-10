@@ -1,9 +1,10 @@
 # frozen_string_literal: true
 
+require 'dotenv/load'
 require 'csv'
 require 'telegram/bot'
 
-BOT_TOKEN = '1654527278:AAEbkIU5jU9O2Cd8-ri73a4G5fTvl0f1e9k'
+BOT_TOKEN = ENV['BOT_TOKEN']
 
 BASE_URI = 'https://framex-dev.wadrid.net/api/video/Falcon%20Heavy%20Test%20Flight%20(Hosted%20Webcast)-wbSwFU6tY1c/frame/'
 TOTAL_FRAMES = 61_696 # for this example but this can be made dynamic
