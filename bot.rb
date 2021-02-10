@@ -60,23 +60,29 @@ Telegram::Bot::Client.run(BOT_TOKEN) do |bot|
       counter = array[3]
       counter += 1
       current_frame = array[0] # We read the current frame from the csv file
-      endgame(current_frame, bot, message) if counter > 10
-      min_frame = current_frame # We update the minimum frame possible for the launch
-      max_frame = array[2]
-      current_frame += ((max_frame - current_frame) / 2)
-      store_csv(current_frame, min_frame, max_frame, counter)
-      fetch_photo(current_frame, bot, message)
+      if counter > 15
+        endgame(current_frame, bot, message)
+      else
+        min_frame = current_frame # We update the minimum frame possible for the launch
+        max_frame = array[2]
+        current_frame += ((max_frame - current_frame) / 2)
+        store_csv(current_frame, min_frame, max_frame, counter)
+        fetch_photo(current_frame, bot, message)
+      end
     when 'Yes'
       array = parse_csv
       counter = array[3]
       counter += 1
       current_frame = array[0]
-      endgame(current_frame, bot, message) if counter > 10
-      min_frame = array[1]
-      max_frame = current_frame # We update the maximum frame possible for the launch
-      current_frame -= ((current_frame - min_frame) / 2)
-      store_csv(current_frame, min_frame, max_frame, counter)
-      fetch_photo(current_frame, bot, message)
+      if counter > 15
+        endgame(current_frame, bot, message)
+      else
+        min_frame = array[1]
+        max_frame = current_frame # We update the maximum frame possible for the launch
+        current_frame -= ((current_frame - min_frame) / 2)
+        store_csv(current_frame, min_frame, max_frame, counter)
+        fetch_photo(current_frame, bot, message)
+      end
     else
       bot.api.send_message(chat_id: message.chat.id, text: 'You can type /start to start the process again')
     end
